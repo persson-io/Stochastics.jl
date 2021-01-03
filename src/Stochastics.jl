@@ -19,9 +19,9 @@ See also: [`binomial_mean`](@ref), [`binomial_variance`](@ref), [`binomial_proba
 """
 struct BinomialDistribution <: DiscreteDistribution
     n::Integer
-    p::Number
-    q::Number
-    function BinomialDistribution(n::Integer, p::Number)
+    p::AbstractFloat
+    q::AbstractFloat
+    function BinomialDistribution(n::Integer, p::AbstractFloat)
         q = 1 - p
         new(n, p, q)
     end
@@ -35,6 +35,7 @@ function binomial_mean(distribution::BinomialDistribution)
     mean = distribution.n * distribution.p
     return mean
 end
+
 
 """
 Calculates the variance for a binomial distribution.
