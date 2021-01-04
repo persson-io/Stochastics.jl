@@ -1,7 +1,7 @@
 module Stochastics
 
-
-export BinomialDistribution, binomial_mean, binomial_variance, binomial_probability_mass_funcion
+include("DescriptiveStatistics.jl")
+include("Inference.jl")
 
 
 abstract type Distribution 

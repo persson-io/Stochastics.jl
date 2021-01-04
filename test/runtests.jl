@@ -1,6 +1,2 @@
-using Stochastics
-using Test
-
-@testset "Stochastics.jl" begin
-    # Write your tests here.
-end
+using SafeTestsets
+@safetestset "Inference Tests" begin include("inferencetests.jl") end
