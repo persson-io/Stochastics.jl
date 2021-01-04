@@ -104,3 +104,18 @@ function two_sample_degrees_of_freedom_unknown_variance(x::Vector, y::Vector)
     f = 1 / (first * second + third * fourth)
     return f
 end
+
+
+"""
+Calculates the interval for the estimated mean difference of two paired samples.
+See also: [`sample_mean`](@ref), [`sample_variance`](@ref).  
+"""
+function normal_interval_two_sample_paired(x::Vector, y::Vector)
+    n = length(x)
+    z = y .- x 
+    z̅ = sample_mean(z)  
+    t = 2.36
+    s = √(sample_variance(z))
+    I = [z̅ - t * s / √(n), z̅ + t * s / √(n)]  
+    return I
+end
