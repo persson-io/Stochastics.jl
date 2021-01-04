@@ -2,6 +2,8 @@ include("DescriptiveStatistics.jl")
 
 
 """
+Calculates the reference variable for ``μ`` when the elements in vector ``x`` comes from a normal distribution.
+See also: [`sample_mean`](@ref), [`sample_variance`](@ref).
 """
 function normal_reference_mu_unknown_variance(μ::AbstractFloat, x::Vector)
     n = length(x) 
@@ -13,6 +15,9 @@ end
 
 
 """
+Calculates the reference variable for ``μ`` when the elements in vector ``x`` comes from a normal distribution.
+This time the variance ``σ²`` has to be known for the distribution.
+See also: [`sample_mean`](@ref).
 """
 function normal_reference_mu_known_variance(μ::AbstractFloat, σ²::AbstractFloat, x::Vector)
     n = length(x) 
@@ -24,6 +29,8 @@ end
 
 
 """
+Reference variable for ``σ²`` when the elements in vector ``x`` comes from a normal distribution.
+See also: [`sample_variance`](@ref).
 """
 function normal_reference_sigma(σ²::AbstractFloat, x::Vector)
     n = length(x)
@@ -34,6 +41,9 @@ end
 
 
 """
+Calculates the reference variable for tests of the difference between two means.
+This variable is used when the variance is known and different for the two samples.
+See also: [`sample_mean`](@ref).
 """
 function normal_reference_two_sample_mu_known_variance(μᵪ::AbstractFloat, μᵧ::AbstractFloat, σ²ᵪ::AbstractFloat, σ²ᵧ::AbstractFloat, x::Vector, y::Vector)
     nᵪ = length(x)
@@ -46,6 +56,9 @@ end
 
 
 """
+Calculates the reference variable for tests of the difference between two means.
+This variable is used when the variance is unknown but equal for the two samples.
+See also: [`sample_mean`](@ref), [`two_sample_variance`](@ref).
 """
 function normal_reference_two_sample_mu_unknown_equal_variance(μᵪ::AbstractFloat, μᵧ::AbstractFloat, x::Vector, y::Vector)
     nᵪ = length(x)
@@ -59,6 +72,9 @@ end
 
 
 """
+Calculates the reference variable for tests of the difference between two means.
+This variable is used when the variance is unknown but not necessarily equal for the two samples.
+See also: [`sample_mean`](@ref), [`sample_variance`](@ref), [`two_sample_degrees_of_freedom_unknown_variance`](@ref).
 """
 function normal_reference_two_sample_mu_unknown_variance(μᵪ::AbstractFloat, μᵧ::AbstractFloat, x::Vector, y::Vector)
     nᵪ = length(x)
@@ -73,6 +89,8 @@ end
 
 
 """
+Calculates the degrees of freedom of the t-distribution that the reference variable above is from.
+See also: [`sample_variance`](@ref), [`normal_reference_two_sample_mu_unknown_variance`](@ref).
 """
 function two_sample_degrees_of_freedom_unknown_variance(x::Vector, y::Vector)
     nᵪ = length(x)
