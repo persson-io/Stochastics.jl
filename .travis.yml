@@ -1,6 +1,14 @@
-codecov: true
 language: julia
+
 julia:
-  - nightly
   - 1.5
+  - nightly
+
+os:
+  - osx
+
+codecov: true
+
+notifications:
+  email: false
   
