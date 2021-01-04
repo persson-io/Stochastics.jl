@@ -1,4 +1,5 @@
 """
+Calculates the average of the elements in a vector ``x``.
 """
 function sample_mean(x::Vector)
     n = length(x)
@@ -8,6 +9,7 @@ end
 
 
 """
+Calculates the sample variance of the elements in a vector ``x``.
 """
 function sample_variance(x::Vector)
     n = length(x)
@@ -17,6 +19,7 @@ end
 
 
 """
+Calculates the covariance of two vectors ``x`` and ``y``. 
 """
 function two_sample_covariance(x::Vector, y::Vector)
     n = length(x)
@@ -26,6 +29,8 @@ end
 
 
 """
+Calculates the correlation coefficient of two vectors ``x`` and ``y``.
+See also: [`sample_variance`](@ref), [`two_sample_covariance`](@ref). 
 """
 function two_sample_correlation_coefficient(x::Vector, y::Vector)
     sᵪ = √(sample_variance(x))
@@ -37,6 +42,9 @@ end
 
 
 """
+Calculates the sample variance of two vectors ``x`` and ``y``.
+Used mainly for calculating reference variables for significance tests when the variance is unknown.
+See also: [`sample_variance`](@ref). 
 """
 function two_sample_variance(x::Vector, y::Vector)
     nᵪ = length(x)
@@ -47,7 +55,11 @@ function two_sample_variance(x::Vector, y::Vector)
     return s²ᵪᵧ    
 end
 
+
 """
+This function calculates the sum of squares. 
+This is used mainly for estimating the parameters in simple linear regression.
+See also: [`not_implemented`](@ref).
 """
 function sum_of_squares(x::Vector, y=x::Vector)
     n = length(x)

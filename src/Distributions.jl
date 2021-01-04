@@ -9,7 +9,7 @@ end
 """
 BinomialDistribution creates a struct for the binomial distribution. 
 
-See also: [`binomial_mean`](@ref), [`binomial_variance`](@ref), [`binomial_probability_mass_funcion`](@ref)
+See also: [`binomial_mean`](@ref), [`binomial_variance`](@ref), [`binomial_probability_mass_funcion`](@ref).
 """
 struct BinomialDistribution <: DiscreteDistribution
     n::Integer
