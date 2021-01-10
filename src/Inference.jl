@@ -1,6 +1,3 @@
-include("DescriptiveStatistics.jl")
-
-
 """
 Calculates the reference variable for ``μ`` when the elements in vector ``x`` comes from a normal distribution.
 See also: [`sample_mean`](@ref), [`sample_variance`](@ref).

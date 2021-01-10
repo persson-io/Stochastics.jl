@@ -1,6 +1,3 @@
-include("DescriptiveStatistics.jl")
-
-
 """
 Estimates all parameters for a simple linear regression. 
 See also: [`sample_mean`](@ref), [`sum_of_squares`](@ref). 
