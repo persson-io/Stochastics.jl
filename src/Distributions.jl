@@ -8,7 +8,6 @@ end
 
 """
 BinomialDistribution creates a struct for the binomial distribution. 
-
 See also: [`binomial_mean`](@ref), [`binomial_variance`](@ref), [`binomial_probability_mass_funcion`](@ref).
 """
 struct BinomialDistribution <: DiscreteDistribution
@@ -50,4 +49,18 @@ end
 
 
 abstract type ContiniousDistribution <: Distribution 
+end
+
+
+struct NormalDistribution <: ContiniousDistribution
+    μ::AbstractFloat
+    σ²::AbstractFloat
+end
+
+
+function normal_probability_density_function(distribution::NormalDistribution, x::AbstractFloat)
+    μ = distribution.μ
+    σ = √(distribution.σ²)
+    𝜑 = 1 / (σ * √(2 * π)) * ℯ^(-1 / 2 * ((x - μ) / σ)^2)
+    return 𝜑
 end
