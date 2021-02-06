@@ -19,6 +19,17 @@ end
 
 
 """
+Calculates the covariance of vector ``x``.
+"""
+function sample_covariance(x::Vector)
+    n = length(x)
+    cᵪᵪ = sum_of_squares(x) / (n - 1)
+    return cᵪᵪ 
+    
+end
+
+
+"""
 Calculates the covariance of two vectors ``x`` and ``y``. 
 """
 function two_sample_covariance(x::Vector, y::Vector)
