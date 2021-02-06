@@ -6,8 +6,8 @@ function normal_reference_mu_unknown_variance(μ::AbstractFloat, x::Vector)
     n = length(x) 
     x̅ = sample_mean(x)
     s = √(sample_variance(x))
-    Rμ = (x̅ - μ) / (s * √(n))
-    return Rμ
+    T = (x̅ - μ) / (s / √(n))
+    return T
 end
 
 
@@ -20,8 +20,8 @@ function normal_reference_mu_known_variance(μ::AbstractFloat, σ²::AbstractFlo
     n = length(x) 
     x̅ = sample_mean(x)
     σ = √(σ²)
-    Rμ = (x̅ - μ) / (σ * √(n))
-    return Rμ 
+    T = (x̅ - μ) / (σ / √(n))
+    return T 
 end
 
 
@@ -32,8 +32,8 @@ See also: [`sample_variance`](@ref).
 function normal_reference_sigma(σ²::AbstractFloat, x::Vector)
     n = length(x)
     s² = sample_variance(x)
-    Rσ² = (n - 1) * s² / σ²
-    return Rσ²
+    T = (n - 1) * s² / σ²
+    return T
 end
 
 
@@ -47,8 +47,8 @@ function normal_reference_two_sample_mu_known_variance(μᵪ::AbstractFloat, μ�
     nᵧ = length(y)
     x̅ = sample_mean(x) 
     y̅ = sample_mean(x)
-    Rμᵪμᵧ = ((x̅ - y̅) - (μᵪ - μᵧ)) / √(σ²ᵪ / nᵪ + σ²ᵧ / nᵧ)
-    return Rμᵪμᵧ
+    T = ((x̅ - y̅) - (μᵪ - μᵧ)) / √(σ²ᵪ / nᵪ + σ²ᵧ / nᵧ)
+    return T
 end
 
 
@@ -63,8 +63,8 @@ function normal_reference_two_sample_mu_unknown_equal_variance(μᵪ::AbstractFl
     x̅ = sample_mean(x) 
     y̅ = sample_mean(x)
     s = √(two_sample_variance(x, y))
-    Rμᵪμᵧ = ((x̅ - y̅) - (μᵪ - μᵧ)) / (s * √(1 / nᵪ + 1 / nᵧ))  
-    return Rμᵪμᵧ
+    T = ((x̅ - y̅) - (μᵪ - μᵧ)) / (s * √(1 / nᵪ + 1 / nᵧ))  
+    return T
 end
 
 
@@ -80,8 +80,8 @@ function normal_reference_two_sample_mu_unknown_variance(μᵪ::AbstractFloat, �
     y̅ = sample_mean(x)
     s²ᵪ = sample_variance(x)
     s²ᵧ = sample_variance(y)
-    Rμᵪμᵧ = ((x̅ - y̅) - (μᵪ - μᵧ)) / √(s²ᵪ / nᵪ + s²ᵧ / nᵧ)
-    return Rμᵪμᵧ   
+    T = ((x̅ - y̅) - (μᵪ - μᵧ)) / √(s²ᵪ / nᵪ + s²ᵧ / nᵧ)
+    return T   
 end
 
 
