@@ -71,3 +71,17 @@ function normal_cumulative_distribution_function(distribution::NormalDistributio
     ϕ, error = quadgk(t -> normal_probability_density_function(X, t), -Inf, x)
     return ϕ
 end
+
+
+function gamma_function(α::AbstractFloat)
+    α > 0 || error("α must be in ℝ > 0")
+    Γ, error = quadgk(x -> x^(α - 1) * exp(-x), 0, Inf)
+    return Γ
+end
+
+
+function gamma_function(α::Integer)
+    α > 0 || error("α must be in ℝ > 0")
+    Γ = factorial(α - 1)
+    return Γ
+end
