@@ -9,3 +9,6 @@ include("Regression.jl")
 
 
 end
+
+# TODO: ML-estimation of distributions.
+# TODO: Least-square-estimation of distributions.
