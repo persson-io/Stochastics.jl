@@ -61,15 +61,35 @@ end
 function normal_probability_density_function(distribution::NormalDistribution, x::AbstractFloat)
     μ = distribution.μ
     σ = √(distribution.σ²)
-    𝜑 = 1 / (σ * √(2 * π)) * ℯ^(-1 / 2 * ((x - μ) / σ)^2)
-    return 𝜑
+    f = 1 / (σ * √(2 * π)) * ℯ^(-1 / 2 * ((x - μ) / σ)^2)
+    return f
 end
 
 
 function normal_cumulative_distribution_function(distribution::NormalDistribution, x::AbstractFloat)
     X = distribution
-    ϕ, error = quadgk(t -> normal_probability_density_function(X, t), -Inf, x)
-    return ϕ
+    F, error = quadgk(t -> normal_probability_density_function(X, t), -Inf, x)
+    return F
+end
+
+
+struct GammaDistribution <: ContiniousDistribution
+    α::AbstractFloat
+    β::AbstractFloat
+end
+
+
+function gamma_probability_density_function(distribution::GammaDistribution, x::AbstractFloat)
+    α = distribution.α
+    β = distribution.β
+    f = β^α / gamma_function(α) * x^(α - 1) * ℯ^(-β * x)
+end
+
+
+function gamma_cumulative_distribution_function(distribution::GammaDistribution, x::AbstractFloat)
+    X = distribution
+    F, error = quadgk(t -> gamma_probability_density_function(X, t), -Inf, x)
+    return F
 end
 
 
@@ -84,4 +104,35 @@ function gamma_function(α::Integer)
     α > 0 || error("α must be in ℝ > 0")
     Γ = factorial(α - 1)
     return Γ
+end
+
+
+struct ExponentialDistribution <: ContiniousDistribution
+    β::AbstractFloat
+    α::Integer
+    function ExponentialDistribution(β::AbstractFloat)
+        α = 1
+        return new(β, α)
+    end
+end
+
+
+function exponential_probability_density_function(distribution::ExponentialDistribution, x::AbstractFloat)
+    f = gamma_probability_density_function(distribution, x)
+end
+
+
+function exponential_cumulative_distribution_function(distribution::ExponentialDistribution, x::AbstractFloat)
+    F = gamma_cumulative_distribution_function(distribution, x)
+end
+
+
+struct ChiSquaredDistribution <: ContiniousDistribution
+    f::AbstractFloat
+end
+
+
+function chi_squared_probability_density_function(distribution::ChiSquaredDistribution, t::AbstractFloat)
+    f = distribution.f
+    C = 2^(-f / 2) / gamma_function(f / 2)
 end
