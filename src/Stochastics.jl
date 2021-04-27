@@ -1,6 +1,7 @@
 module Stochastics
 
 using QuadGK
+using Roots
 
 include("DescriptiveStatistics.jl")
 include("Inference.jl")

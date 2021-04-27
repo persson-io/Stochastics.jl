@@ -1,4 +1,5 @@
 using QuadGK
+using Roots
 
 
 abstract type Distribution end
@@ -73,7 +74,10 @@ function normal_cumulative_distribution_function(distribution::NormalDistributio
 end
 
 
-struct GammaDistribution <: ContiniousDistribution
+abstract type GammaDistributions <: ContiniousDistribution end
+
+
+struct GammaDistribution <: GammaDistributions
     α::AbstractFloat
     β::AbstractFloat
 end
@@ -107,12 +111,12 @@ function gamma_function(α::Integer)
 end
 
 
-struct ExponentialDistribution <: ContiniousDistribution
-    β::AbstractFloat
+struct ExponentialDistribution <: GammaDistributions
     α::Integer
+    β::AbstractFloat
     function ExponentialDistribution(β::AbstractFloat)
         α = 1
-        return new(β, α)
+        return new(α, β)
     end
 end
 
@@ -127,12 +131,79 @@ function exponential_cumulative_distribution_function(distribution::ExponentialD
 end
 
 
-struct ChiSquaredDistribution <: ContiniousDistribution
-    f::AbstractFloat
+struct ChiSquaredDistribution <: GammaDistributions
+    df::Integer
+    α::AbstractFloat
+    β::AbstractFloat
+    function ChiSquaredDistribution(df::Integer)
+        α = df / 2
+        β = 1 / 2
+        return new(df, α, β)
+    end
 end
 
 
-function chi_squared_probability_density_function(distribution::ChiSquaredDistribution, t::AbstractFloat)
-    f = distribution.f
-    C = 2^(-f / 2) / gamma_function(f / 2)
+function chi_squared_probability_density_function(distribution::ChiSquaredDistribution, x::AbstractFloat)
+    df = distribution.df
+    C = 1 / (gamma_function(df / 2) * 2^(df / 2))
+    f = C * x^(df / 2 - 1) * ℯ^(-x / 2)
+end
+
+
+function chi_squared_cumulative_distribution_function(distribution::ChiSquaredDistribution, x::AbstractFloat)
+    X = distribution
+    F, error = quadgk(t -> chi_squared_probability_density_function(X, t), 0, x)
+    return F
+end
+
+
+abstract type tDistributions <: ContiniousDistribution end
+
+
+struct tDistribution <: tDistributions
+    df::Integer
+end
+
+
+function t_probability_density_function(distribution::tDistributions, x::AbstractFloat)
+    df = distribution.df
+    C = 1 / √(df * π) * gamma_function((df + 1) / 2) / gamma_function(df / 2)
+    f = C * (1 + x^2 / df)^((-df - 1) / 2)
+end
+
+
+function t_cumulative_distribution_function(distribution::tDistributions, x::AbstractFloat)
+    X = distribution
+    F, error = quadgk(t -> t_probability_density_function(X, t), -Inf, x)
+    return F
+end
+
+
+struct CauchyDistribution <: tDistributions 
+    df::Integer
+    function CauchyDistribution()
+        df = 1
+        new(df)
+    end
+end
+
+
+function quantile_finder(distribution::ChiSquaredDistribution, α::AbstractFloat)
+    f(x) = chi_squared_cumulative_distribution_function(distribution, x) - 1 + α
+    quantile = find_zero(f, (0, 200))
+    return quantile
+end
+
+
+function quantile_finder(distribution::NormalDistribution, α::AbstractFloat)
+    f(x) = normal_cumulative_distribution_function(distribution, x) - 1 + α
+    quantile = find_zero(f, (-5, 5))
+    return quantile
+end
+
+
+function quantile_finder(distribution::tDistributions, α::AbstractFloat)
+    f(x) = t_cumulative_distribution_function(distribution, x) - 1 + α
+    quantile = find_zero(f, (1, 1000))
+    return quantile
 end
