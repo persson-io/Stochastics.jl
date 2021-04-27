@@ -1,4 +1,4 @@
-name = "Stochastics"
+name = "Stochastics.jl"
 uuid = "88c8ce17-7ba1-4c24-b359-c3804bac64b9"
 authors = ["persson-io <rasmus@persson.io> and contributors"]
 version = "0.1.0"
