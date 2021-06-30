@@ -107,12 +107,91 @@ end
 Calculates the interval for the estimated mean difference of two paired samples.
 See also: [`sample_mean`](@ref), [`sample_variance`](@ref).  
 """
-function normal_interval_two_sample_paired(x::Vector, y::Vector)
+function normal_interval_two_sample_paired(x::Vector, y::Vector, α::AbstractFloat)
     n = length(x)
     z = y .- x 
-    z̅ = sample_mean(z)  
-    t = 2.36
+    z̅ = sample_mean(z)
+    dist = tDistribution(n-1)  
+    t = quantile_finder(dist, α)
     s = √(sample_variance(z))
     I = [z̅ - t * s / √(n), z̅ + t * s / √(n)]  
     return I
+end
+
+
+function normal_interval_mu_unknown_variance(μ::AbstractFloat, x::Vector, α::AbstractFloat)
+    
+end
+
+
+function normal_interval_mu_known_variance(μ::AbstractFloat, σ²::AbstractFloat, x::Vector, α::AbstractFloat)
+    
+end
+
+
+function normal_interval_sigma(x::Vector, α::AbstractFloat)
+    
+end
+
+
+function normal_interval_two_sample_mu_known_variance(μᵪ::AbstractFloat, μᵧ::AbstractFloat, σ²ᵪ::AbstractFloat, σ²ᵧ::AbstractFloat, x::Vector, y::Vector, α::AbstractFloat)
+    
+end
+
+
+function normal_interval_two_sample_mu_unknown_equal_variance(μᵪ::AbstractFloat, μᵧ::AbstractFloat, x::Vector, y::Vector, α::AbstractFloat)
+    
+end
+
+
+function exp_reference_mu(μ::AbstractFloat, x::Vector)
+    n = length(n)
+    x̅ = sample_mean(x)
+    T = (x̅ - μ) / (μ / √(n)) 
+    return T
+end
+
+
+function exp_interval_mu(μ::AbstractFloat, x::Vector, α::AbstractFloat)
+    
+end
+
+
+function binomial_reference_p()
+    
+end
+
+
+function binomial_interval_p()
+    
+end
+
+
+function hypergeometric_reference_p()
+    
+end
+
+
+function hypergeometric_interval_p()
+    
+end
+
+
+function binomial_interval_comparison_of_proportions()
+    
+end
+
+
+function poisson_reference_mu()
+    
+end
+
+
+function poisson_interval_mu()
+    
+end
+
+
+function test()
+    
 end

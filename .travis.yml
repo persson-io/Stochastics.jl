@@ -2,6 +2,7 @@ language: julia
 
 julia:
   - 1.5
+  - 1.6
 
 os:
   - osx
@@ -10,4 +11,3 @@ codecov: true
 
 notifications:
   email: false
-  

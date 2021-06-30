@@ -10,3 +10,5 @@ include("Regression.jl")
 
 
 end
+
+#TODO: Documentation and one example.
